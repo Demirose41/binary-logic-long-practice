@@ -1,10 +1,44 @@
 // Convert the integers in the console.logs below to base 16:
-
+const convertToBase10 = require('./1-convertToBase10');
 /******************************************************************************/
 
 const convertToBase16 = element => {
-  // Your code here
+  // convert all numbers to base10 first
+  if(typeof element === 'string' ){
+    element = convertToBase10(element);  
+  }
+  let exponent = 0;
+  let exponents = []; 
+  let hex = '0x';
+  while((powerOf16(exponent) <= element)){
+    exponents = [...exponents, exponent]
+    exponent++;
+  }
+  exponents.reverse().map((exponent) => {
+    if(element - powerOf16(exponent) >= 0){
+      let currentValue = Math.floor(element / powerOf16(exponent)) 
+      hex += baseHex(currentValue);
+      element -= currentValue * powerOf16(exponent);
+    }else{
+      hex += '0';
+    } 
+  })
+
+  return hex;
+
+
 };
+
+
+function powerOf16(exponent){
+  return (1* (16**exponent))
+}
+
+function baseHex(num){
+  const HEXVALUES = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+  return HEXVALUES[num]
+}
+
 
 /******************************************************************************/
 
