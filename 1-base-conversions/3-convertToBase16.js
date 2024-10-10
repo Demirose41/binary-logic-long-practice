@@ -10,14 +10,20 @@ const convertToBase16 = element => {
   let exponent = 0;
   let exponents = []; 
   let hex = '0x';
+  // see how high of an exponent will be needed
   while((powerOf16(exponent) <= element)){
     exponents = [...exponents, exponent]
     exponent++;
   }
+  // starting at the highest exponent
   exponents.reverse().map((exponent) => {
+    // if the value is lower than the maximum of the given hex column 
     if(element - powerOf16(exponent) >= 0){
+      // find its highest multiple of 16
       let currentValue = Math.floor(element / powerOf16(exponent)) 
+      // add that multiple to the running hex value
       hex += baseHex(currentValue);
+      // subract the product of the multiple from the element
       element -= currentValue * powerOf16(exponent);
     }else{
       hex += '0';
